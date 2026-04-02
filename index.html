@@ -2,83 +2,24 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>미니 타겟 게임</title>
+    <title>코알라 낙하 게임 - 카운트다운</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="game-container">
+        <div id="score-board">Score: <span id="score">0</span></div>
+        
+        <div id="game-board">
+            <div id="koala">🐨</div>
+        </div>
 
-    <div class="game-info">
-        <h1>🎯 미니 타겟 게임</h1>
-        <p>남은 시간: <span id="timer">10</span>초 | 점수: <span id="score">0</span>점</p>
-        <button id="start-btn">게임 시작!</button>
+        <div id="overlay">
+            <h1 id="title">Koala Fall</h1>
+            <div id="countdown-text" style="font-size: 80px; font-weight: bold; color: #e74c3c; margin: 20px 0;"></div>
+            <p id="sub-text">부엉이를 딛고 살아남으세요!</p>
+            <button id="start-btn" onclick="startSequence()">게임 시작</button>
+        </div>
     </div>
-
-    <div id="game-area">
-        <div id="ball"></div>
-    </div>
-
-    <script>
-        const ball = document.getElementById('ball');
-        const scoreDisplay = document.getElementById('score');
-        const timerDisplay = document.getElementById('timer');
-        const startBtn = document.getElementById('start-btn');
-        const gameArea = document.getElementById('game-area');
-
-        let score = 0;
-        let timeLeft = 10;
-        let gameActive = false;
-        let timerId;
-
-        function moveBall() {
-            const maxX = gameArea.clientWidth - ball.clientWidth;
-            const maxY = gameArea.clientHeight - ball.clientHeight;
-            
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            ball.style.left = randomX + 'px';
-            ball.style.top = randomY + 'px';
-        }
-
-        function startGame() {
-            score = 0;
-            timeLeft = 10;
-            gameActive = true;
-            scoreDisplay.textContent = score;
-            timerDisplay.textContent = timeLeft;
-            
-            startBtn.disabled = true;
-            ball.style.display = 'block';
-            moveBall();
-
-            timerId = setInterval(() => {
-                timeLeft--;
-                timerDisplay.textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    endGame();
-                }
-            }, 1000);
-        }
-
-        function endGame() {
-            clearInterval(timerId);
-            gameActive = false;
-            ball.style.display = 'none';
-            startBtn.disabled = false;
-            alert(`게임 끝! 최종 점수: ${score}점입니다.`);
-        }
-
-        ball.addEventListener('click', () => {
-            if (gameActive) {
-                score++;
-                scoreDisplay.textContent = score;
-                moveBall();
-            }
-        });
-
-        startBtn.addEventListener('click', startGame);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
